@@ -1,11 +1,11 @@
 pipeline {
     agent {
-        docker 'maven:3.6.1'
+        docker 'maven:3.6.1-jdk-8'
     }
     stages {
         stage('build') {
             steps {
-                sh 'mvn --version'
+                sh 'mvn clean package'
             }
         }
     }
