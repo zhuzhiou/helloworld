@@ -11,4 +11,8 @@ node {
             echo "$M3_HOME/bin/mvn -DskipTests=true clean package"
         }
     }
+    
+    stage('DockerBuild') {
+        docker.build("test-image:${env.BUILD_ID}")
+    }
 }
