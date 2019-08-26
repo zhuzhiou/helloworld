@@ -9,14 +9,14 @@ node {
     stage('Build') {
         withEnv(["JAVA_HOME=${tool 'jdk1.8.0_221'}", "GIT_COMMIT=${sh(returnStdout: true, script: 'git log -n 1 --pretty=format:%h').trim()}", "PATH+M3_HOME=${tool 'M3'}/bin:${env.JAVA_HOME}/bin"]) {
             sh "mvn -DskipTests=true clean package"
-            echo "$(env.GIT_COMMIT) -> ${env.GIT_COMMIT}"
+            echo "1 -> ${env.GIT_COMMIT}"
         }
     }
     
     stage('DockerBuild') {
-        //echo "$GIT_COMMIT -> $(GIT_COMMIT) -> ${GIT_COMMIT}"
+        echo "2 -> ${env.GIT_COMMIT}"
         docker.withRegistry('https://172.16.27.205/', 'harborUser') {
-            //echo "$GIT_COMMIT -> $(GIT_COMMIT) -> ${GIT_COMMIT}"
+            echo "3 -> ${env.GIT_COMMIT}"
             docker.build("172.16.27.205/test/test-image:${env.BUILD_ID}").push()
         }
     }
