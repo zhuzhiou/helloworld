@@ -17,13 +17,14 @@ node {
     }
     
     def remote = [:]
-    remote.name = 'h5-server'
+    remote.name = 'portal-h5'
     remote.host = '172.16.27.203'
     remote.allowAnyHosts = true
     
     withCredentials([sshUserPrivateKey(credentialsId: 'sshUser', keyFileVariable: 'identityFile', passphraseVariable: 'passphrase', usernameVariable: 'userName')]) {
         remote.user = userName
         remote.identityFile = identityFile
+        remote.passphrase = passphrase
         stage('DockerRun') {
             sshCommand remote: remote, command: 'mkdir /opt/portal/helloworld'
             sshPut remote: remote, from: 'docker-compose.yaml', into: '/opt/portal/helloworld'
