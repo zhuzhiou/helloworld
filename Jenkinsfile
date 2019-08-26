@@ -19,7 +19,7 @@ node {
     def remote = [:]
     remote.name = 'h5-server'
     remote.host = '172.16.27.203'
-    remote.allowAnyHost = true
+    remote.allowAnyHosts = true
     
     withCredentials([sshUserPrivateKey(credentialsId: 'sshUser', keyFileVariable: 'identityFile', passphraseVariable: 'passphrase', usernameVariable: 'userName')]) {
         remote.user = userName
