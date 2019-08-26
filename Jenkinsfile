@@ -22,6 +22,7 @@ node {
     remote.allowAnyHosts = true
     
     withCredentials([sshUserPrivateKey(credentialsId: 'sshUser', keyFileVariable: 'identityFile', passphraseVariable: 'passphrase', usernameVariable: 'userName')]) {
+        echo "${userName} - ${passphrase}"
         remote.user = userName
         remote.identityFile = identityFile
         remote.passphrase = passphrase
