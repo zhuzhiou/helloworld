@@ -15,7 +15,7 @@ node {
     
     stage('DockerBuild') {
         docker.withRegistry('https://172.16.27.205/harbor/users', 'HARBOR_USER') {
-            docker.build("test-image:${env.BUILD_ID}").push()
+            docker.build("test/test-image:${env.BUILD_ID}").push()
         }
     }
 }
