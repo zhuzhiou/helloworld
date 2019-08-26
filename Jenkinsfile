@@ -1,5 +1,6 @@
 node {
     def maven3
+    def image
 
     stage('Preparation') {
         checkout scm
@@ -13,6 +14,6 @@ node {
     }
     
     stage('DockerBuild') {
-        docker.build("test-image:${env.BUILD_ID}")
+        docker.build("172.16.27.205/test-image:${env.BUILD_ID}").push()
     }
 }
