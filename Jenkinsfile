@@ -11,10 +11,8 @@ node {
         }
     
         stage('DockerBuild') {
-            echo "2 -> ${env.GIT_COMMIT}"
             docker.withRegistry('https://172.16.27.205/', 'harborUser') {
-                echo "3 -> ${env.GIT_COMMIT}"
-                docker.build("172.16.27.205/test/test-image:${env.BUILD_ID}").push()
+                docker.build("172.16.27.205/test/test-image:${env.GIT_COMMIT}").push()
             }
         }
     
@@ -29,7 +27,7 @@ node {
             
                 //sshCommand remote: remote, command: 'mkdir -p /opt/portal/helloworld'
                 sshCommand remote: remote, command: 'containers=$(docker ps -a -q --filter name=test-image);if test -n "$containers"; then docker container stop $containers; docker container rm $containers; fi'
-                sshCommand remote: remote, command: "docker run -d -p 8092:8080 --name test-image 172.16.27.205/test/test-image:${env.BUILD_ID}"
+                sshCommand remote: remote, command: "docker run -d -p 8092:8080 --name test-image 172.16.27.205/test/test-image:${env.GIT_COMMIT}"
             }
         }
     }
