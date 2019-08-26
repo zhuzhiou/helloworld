@@ -1,3 +1,6 @@
 node {
-    echo "测试"
+    checkout scm
+    
+    docker.build("test-image:${env.BUILD_ID}")
+
 }
