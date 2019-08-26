@@ -8,7 +8,7 @@ node {
     
     stage('Build') {
         withEnv(["M3_HOME=$maven3"]) {
-            echo "$M3_HOME/bin/mvn -DskipTests=true clean package"
+            sh "$M3_HOME/bin/mvn -DskipTests=true clean package"
         }
     }
     
