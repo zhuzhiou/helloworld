@@ -11,11 +11,10 @@ node {
         }
         
         stage('DockerBuild') {
-            if (sh(script: 'docker image ls -q 172.16.27.205/test/test-image:338e768', returnStdout: true)?.trim()) {
-                echo "OK"
-                //docker.withRegistry('https://172.16.27.205/', 'harborUser') {
-                //    docker.build("172.16.27.205/test/test-image:${env.GIT_COMMIT}").push()
-                //}
+            if (!sh(script: "docker image ls -q 172.16.27.205/test/test-image:${env.GIT_COMMIT}", returnStdout: true)?.trim()) {
+                docker.withRegistry('https://172.16.27.205/', 'harborUser') {
+                    docker.build("172.16.27.205/test/test-image:${env.GIT_COMMIT}").push()
+                }
             }
         }
 
