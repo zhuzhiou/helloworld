@@ -12,14 +12,15 @@ node {
                 sshCommand remote: remote, command: "if [ \$(docker service ls --filter name=test-image | wc -l) -gt 1 ]; then docker service update --force --image 172.16.27.205/test/test-image:2287b1e test-image; fi"
                 
                 // 如果服务未跑起来创建服务
-                sshCommand remote: remote, command: """test \$(docker service ls --filter name=test-image | wc -l) -eq 1 && \\
+                sshCommand remote: remote, command: """if [ \$(docker service ls --filter name=test-image | wc -l) -eq 1 ];then && \\
                     docker service create \\
                     --network portal \\
                     --name test-image \\
                     --publish published=8092,target=8080 \\
                     --env spring.datasource.name=a \\
                     --env spring.datasource.url=b \\
-                    172.16.27.205/test/test-image:2287b1e"""
+                    172.16.27.205/test/test-image:2287b1e
+                    fi"""
             }
         }
     }
