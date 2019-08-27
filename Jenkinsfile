@@ -11,8 +11,11 @@ node {
         }
         
         stage('DockerBuild') {
-            docker.withRegistry('https://172.16.27.205/', 'harborUser') {
-                docker.build("172.16.27.205/test/test-image:${env.GIT_COMMIT}").push()
+            if (sh(script: 'docker image ls -q 172.16.27.205/test/test-image:aa', returnStdout: true).allWhitespace) {
+                echo "OK"
+                //docker.withRegistry('https://172.16.27.205/', 'harborUser') {
+                //    docker.build("172.16.27.205/test/test-image:${env.GIT_COMMIT}").push()
+                //}
             }
         }
 
@@ -21,8 +24,7 @@ node {
                 // 远程对象
                 def remote = [name:'portal-h5', host:'172.16.27.203', user: userName, identityFile: identityFile, allowAnyHosts: true ]
                 
-                // 如果服务已启动调整服务
-                //sshCommand remote: remote, command: "test \$(docker service ls --filter name=test-image | wc -l) -gt 1 && docker service update --force --image 172.16.27.205/test/test-image:${env.GIT_COMMIT} test-image"
+                // 如果服务已启动调整服务（版本号相同忽略）注：使用test命令当条件不成立时jenkins会报错
                 sshCommand remote: remote, command: """if [ \$(docker service ls --filter name=test-image | wc -l) -gt 1 ] && [ \$(docker service ls --format {{.Image}}) != '172.16.27.205/test/test-image:${env.GIT_COMMIT}' ];then \\
                     docker service update \\
                     --force \\
