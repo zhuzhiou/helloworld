@@ -23,10 +23,10 @@ node {
                 
                 // 如果服务已启动调整服务
                 //sshCommand remote: remote, command: "test \$(docker service ls --filter name=test-image | wc -l) -gt 1 && docker service update --force --image 172.16.27.205/test/test-image:${env.GIT_COMMIT} test-image"
-                sshCommand remote: remote, command: "if [ $(docker service ls --filter name=test-image | wc -l) -gt 1 ] && [ $(docker service ls --format {{.Image}}) != '172.16.27.205/test/test-image:${env.GIT_COMMIT}' ];then \
-                    docker service update \
-                    --force \
-                    --image 172.16.27.205/test/test-image:${env.GIT_COMMIT} \
+                sshCommand remote: remote, command: "if [ $(docker service ls --filter name=test-image | wc -l) -gt 1 ] && [ $(docker service ls --format {{.Image}}) != '172.16.27.205/test/test-image:${env.GIT_COMMIT}' ];then \\
+                    docker service update \\
+                    --force \\
+                    --image 172.16.27.205/test/test-image:${env.GIT_COMMIT} \\
                     test-image
                     fi"""
                 
