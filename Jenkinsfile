@@ -19,7 +19,7 @@ node {
                     --publish published=8092,target=8080 \\
                     --env spring.datasource.name=a \\
                     --env spring.datasource.url=b \\
-                    172.16.27.205/test/test-image:2287b1e
+                    172.16.27.205/test/test-image:2287b1e"""
             }
         }
     }
