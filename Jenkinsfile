@@ -30,8 +30,8 @@ node {
                     docker service create \\
                     --network portal \\
                     --name test-image \\
-                    --label commit=${env.GIT_COMMIT}
-                    --label createdBy=jenkins
+                    --label commit=${env.GIT_COMMIT} \\
+                    --label createdBy=jenkins \\
                     --publish published=8092,target=8080 \\
                     --env spring.datasource.name=a \\
                     --env spring.datasource.url=b \\
