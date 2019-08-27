@@ -12,7 +12,7 @@ node {
         
         stage('DockerBuild') {
             docker.withRegistry('https://172.16.27.205/', 'harborUser') {
-                docker.build("172.16.27.205/test/test-image:${env.GIT_COMMIT}", "--build-arg GIT_COMMIT=${env.GIT_COMMIT}").push()
+                docker.build("172.16.27.205/test/test-image:${env.GIT_COMMIT}", "--build-arg GIT_COMMIT=${env.GIT_COMMIT} .").push()
             }
         }
 
