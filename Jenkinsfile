@@ -12,7 +12,7 @@ node {
         
         stage('DockerBuild') {
             docker.withRegistry('https://172.16.27.205/', 'harborUser') {
-                docker.build("172.16.27.205/test/test-image:${env.GIT_COMMIT}", "--build-arg GIT_COMMIT=${env.GIT_COMMIT} .").push()
+                docker.build("172.16.27.205/test/test-image:${env.GIT_COMMIT}").push()
             }
         }
 
@@ -30,6 +30,8 @@ node {
                     docker service create \\
                     --network portal \\
                     --name test-image \\
+                    --label commit=${env.GIT_COMMIT}
+                    --label createdBy=jenkins
                     --publish published=8092,target=8080 \\
                     --env spring.datasource.name=a \\
                     --env spring.datasource.url=b \\
